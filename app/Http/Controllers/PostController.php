@@ -1,14 +1,16 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
 
-class Postcontroller extends Controller
+
+class PostController extends Controller
 {
     public function index(Post $post)
     {
-        return $post->get();
+        $posts = $post->getPaginateByLimit(1);
+        //$posts = $post::orderBy('updated_at', 'desc')->paginate(5); // 5件ごとにページネーション
+        return view('posts.index', ['p' => $posts]);
     }
 }
