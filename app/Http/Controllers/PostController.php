@@ -8,9 +8,10 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function index()
+    public function index(Post $post)
     {
-        $posts = Post::orderBy('updated_at', 'desc')->take(10)->get();
-        return view('posts.index', ['posts' => $posts]);
+        $posts = $post->getPaginateByLimit(1);
+        //$posts = $post::orderBy('updated_at', 'desc')->paginate(5); // 5件ごとにページネーション
+        return view('posts.index', ['p' => $posts]);
     }
 }
