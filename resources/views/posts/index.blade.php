@@ -9,7 +9,9 @@
     <h1>Blog Posts</h1>
     @foreach ($p as $post)
         <div>
-            <h2>{{ $post->title }}</h2>
+            <a href="/posts/{{ $post->id}}">
+                <h2>{{ $post->title }}</h2>
+            </a>
             <p>{{ $post->body }}</p>
         </div>
     @endforeach
