@@ -15,11 +15,23 @@
                     <h2>{{ $post->title }}</h2>
                 </a>
                 <p>{{ $post->body }}</p>
+                <form action="/posts/{{ $post->id}}" id="form_{{ $post->id}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" onclick="deletePost({{ $post->id}})">delete</button>
+                </form>
             </div>
         @endforeach
     </div>
-    <div>
-        {{ $p->links() }}
-    </div>
+    <div>{{ $p->links() }}</div>
+    <script>//この位置に指定するのは処理を高速化するため
+        function deletePost(id){
+            'use strict'
+            
+            if(confirm('削除すると復元できません。\n本当に削除しますか?')){
+                document.getElementById(`form_${id}`).submit();
+            }
+        }
+    </script>
 </body>
 </html>
