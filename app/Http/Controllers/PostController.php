@@ -10,8 +10,8 @@ class PostController extends Controller
 {
     public function index(Post $post)
     {
-        $posts = $post->getPaginateByLimit(1);
-        //$posts = $post::orderBy('updated_at', 'desc')->paginate(5); // 5件ごとにページネーション
+        $posts = $post->getPaginateByLimit(5);
+        $posts = $post::orderBy('updated_at', 'desc')->paginate(5); // 5件ごとにページネーション
         return view('posts.index', ['p' => $posts]);
     }
     
@@ -30,5 +30,17 @@ class PostController extends Controller
         $input = $request['post'];
         $post->fill($input)->save();//SQLのINSERET
         return redirect('/posts/'. $post->id);
+    }
+    
+    public function edit(Post $post)
+    {
+        return view('posts.edit')->with(['post' => $post]);
+    }
+    
+    public function update(PostRequest $request,Post $post)
+    {
+        $input_post = $request['post'];
+        $post->fill($input_post)->save();
+        return redirect('/posts/' . $post->id);
     }
 }
